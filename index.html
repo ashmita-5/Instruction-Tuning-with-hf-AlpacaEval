@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Generation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Set background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Set full viewport height */
+        }
+        .container {
+            width: 80%; /* Set container width */
+            max-width: 600px; /* Maximum width */
+            padding: 20px;
+            background-color: #fff; /* Set container background color */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add box shadow */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #generated_text {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9; /* Set generated text background color */
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Generation</h1>
+        <form action="/generate" method="post">
+            <label for="prompt">Enter your prompt:</label><br>
+            <input type="text" id="prompt" name="prompt" required><br><br>
+            <input type="submit" value="Generate Text">
+        </form>
+        <div id="generated_text"></div>
+    </div>
+    <script>
+        // Update generated text using AJAX
+        const form = document.querySelector('form');
+        form.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const response = await fetch('/generate', {
+                method: 'POST',
+                body: formData
+            });
+            const generatedText = await response.text();
+            document.getElementById('generated_text').innerText = generatedText;
+        });
+    </script>
+</body>
+</html>
